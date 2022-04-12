@@ -4,7 +4,7 @@
 """
 
 
-def matrix_transpose(matrix:list):
+def matrix_transpose(matrix: list):
     """
         Return the transpose of the specified 2D matrix.
 

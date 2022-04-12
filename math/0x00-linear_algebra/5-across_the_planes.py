@@ -4,7 +4,7 @@
 """
 
 
-def add_matrices2D(mat1:list, mat2:list):
+def add_matrices2D(mat1: list, mat2: list):
     """
         Return the addition of two 2D matrix.
 

@@ -4,7 +4,7 @@
 """
 
 
-def add_arrays(arr1:list, arr2:list):
+def add_arrays(arr1: list, arr2: list):
     """
         Return the addition of two matrix.
 

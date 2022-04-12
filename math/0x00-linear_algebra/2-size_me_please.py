@@ -4,7 +4,7 @@
 """
 
 
-def matrix_shape(matrix:list):
+def matrix_shape(matrix: list):
     """
         Return the shape of a specified matrix.
 

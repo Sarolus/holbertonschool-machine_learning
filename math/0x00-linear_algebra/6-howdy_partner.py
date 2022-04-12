@@ -4,7 +4,7 @@
 """
 
 
-def cat_arrays(arr1:list, arr2:list):
+def cat_arrays(arr1: list, arr2: list):
     """
         Return the concatenation of two matrix.
 
@@ -12,5 +12,5 @@ def cat_arrays(arr1:list, arr2:list):
             arr1 (list): The first matrix.
             arr2 (list): The second matrix.
     """
-    
+
     return arr1 + arr2
