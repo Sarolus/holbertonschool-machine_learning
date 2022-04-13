@@ -8,11 +8,11 @@ from unittest import result
 
 def mat_mul(mat1: list, mat2: list):
     """
-        Make the multiplication between 
+        Make the multiplication between the two specified matrix.
 
     Args:
-        mat1 (list): _description_
-        mat2 (list): _description_
+        mat1 (list): The first specified matrix.
+        mat2 (list): The second specified matrix.
 
     Returns:
         list: Return the result of the multiplication

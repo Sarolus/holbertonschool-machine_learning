@@ -25,7 +25,8 @@ def matrix_shape(matrix: list):
 
 def cat_matrices(mat1: list, mat2: list, axis: int = 0):
     """
-        Return the concatenation between the first and the second specified matrix.
+        Return the concatenation between the first and the second
+        specified matrix.
 
         Args:
             mat1 (list): The first specified matrix.

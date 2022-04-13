@@ -6,7 +6,7 @@
 
 def np_shape(matrix: list):
     """
-       Return the shape of the specified matrix using numpy.ndarray 
+       Return the shape of the specified matrix using numpy.ndarray.
 
         Args:
             matrix (list): The specified matrix.

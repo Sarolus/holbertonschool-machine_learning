@@ -4,7 +4,7 @@
 """
 
 
-def cat_matrices2D(mat1:list, mat2:list, axis:int=0):
+def cat_matrices2D(mat1: list, mat2: list, axis: int = 0):
     """
         Return the concatenation of two matrix.
 
@@ -20,8 +20,8 @@ def cat_matrices2D(mat1:list, mat2:list, axis:int=0):
             return None
         concatenation = [row[:] for row in mat1]
         concatenation += mat2
-    
-    #Horizontal
+
+    # Horizontal
     elif (axis == 1):
         if len(mat1) != len(mat2):
             return None
