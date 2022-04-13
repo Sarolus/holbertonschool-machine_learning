@@ -31,5 +31,5 @@ def mat_mul(mat1: list, mat2: list):
                         mat2[element][column]
 
         return result
-    except:
+    except Exception:
         return None
