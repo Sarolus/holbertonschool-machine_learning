@@ -15,6 +15,9 @@ def mat_mul(mat1: list, mat2: list):
     Returns:
         list: Return the result of the multiplication
     """
+    if len(mat1) != len(mat2):
+        return None
+    
     result = []
 
     for row in range(len(mat1)):
