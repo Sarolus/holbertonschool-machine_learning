@@ -3,8 +3,6 @@
     Matrix Multiplication Task
 """
 
-from unittest import result
-
 
 def mat_mul(mat1: list, mat2: list):
     """
