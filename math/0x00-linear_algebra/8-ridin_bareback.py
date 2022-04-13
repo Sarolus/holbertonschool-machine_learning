@@ -18,21 +18,18 @@ def mat_mul(mat1: list, mat2: list):
     if len(mat2) != len(mat1[0]):
         return None
 
-    try:
-        result = []
+    result = []
 
-        for row in range(len(mat1)):
-            result.append([])
+    for row in range(len(mat1)):
+        result.append([])
 
-            for column in range(len(mat2[0])):
-                # Initialize the result matrix.
-                result[row].append(0)
+        for column in range(len(mat2[0])):
+            # Initialize the result matrix.
+            result[row].append(0)
 
-                for element in range(len(mat2)):
-                    # Multiply the row of mat1 with the column of mat2.
-                    result[row][column] += mat1[row][element] * \
-                        mat2[element][column]
+            for element in range(len(mat2)):
+                # Multiply the row of mat1 with the column of mat2.
+                result[row][column] += mat1[row][element] * \
+                    mat2[element][column]
 
-        return result
-    except Exception:
-        return None
+    return result
