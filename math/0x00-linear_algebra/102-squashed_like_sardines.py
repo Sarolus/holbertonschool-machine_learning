@@ -1,19 +1,14 @@
 #!/usr/bin/env python3
 """
-    Matrix Concatenation Based On Specified Axis Task
+    Concatenates two matrices along a specific axis
 """
 
 
-def matrix_shape(matrix: list):
+def matrix_shape(matrix):
     """
-        Return the shape of a specified matrix.
-
-        Args:
-            matrix (list): The specified matrix
-
-        Returns:
-            list: The shape of a matrix
+        Returns the shape of a matrix
     """
+
     shape = []
 
     while(type(matrix) is list):
@@ -23,18 +18,9 @@ def matrix_shape(matrix: list):
     return shape
 
 
-def cat_matrices(mat1: list, mat2: list, axis: int = 0):
+def cat_matrices(mat1, mat2, axis=0):
     """
-        Return the concatenation between the first and the second
-        specified matrix.
-
-        Args:
-            mat1 (list): The first specified matrix.
-            mat2 (list): The second specified matrix.
-            axis (int, optional): The specified axis. Defaults to 0.
-
-        Returns:
-        _   list: The concatenation of the first and second matrix.
+        Concatenates two matrices along a specific axis
     """
     shape1 = matrix_shape(mat1)
     shape2 = matrix_shape(mat2)
@@ -42,32 +28,19 @@ def cat_matrices(mat1: list, mat2: list, axis: int = 0):
     if len(shape1) != len(shape2):
         return None
 
-    # Y axis
+    for row in range(len(shape1)):
+        if shape1[row] != shape2[row] and row != axis:
+            return None
+
+    if axis < 0 or axis > len(shape1):
+        return None
+
+    result = []
+
     if axis == 0:
         return mat1 + mat2
 
-    # X axis
-    elif axis == 1:
-        result = []
+    for row in range(len(mat1)):
+        result.append(cat_matrices(mat1[row], mat2[row], axis - 1))
 
-        for row in range(len(mat1)):
-            result.append(mat1[row] + mat2[row])
-
-        return result
-
-    # N axis
-    elif axis == 3:
-        result = []
-
-        for row in range(len(mat1)):
-            result.append([])
-            for column in range(len(mat1[row])):
-                result[row].append([])
-
-                for i in range(len(mat1[row][column])):
-                    result[row][column].append(
-                        mat1[row][column][i] + mat2[row][column][i])
-
-        return result
-
-    return None
+    return result
