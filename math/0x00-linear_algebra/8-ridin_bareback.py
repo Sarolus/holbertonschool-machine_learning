@@ -17,7 +17,7 @@ def mat_mul(mat1: list, mat2: list):
     """
     if len(mat1) != len(mat2):
         return None
-    
+
     result = []
 
     for row in range(len(mat1)):
