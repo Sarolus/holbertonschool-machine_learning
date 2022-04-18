@@ -1,3 +1,4 @@
 *main*
 .editorconfig
 *pycache*
+pca.npz
