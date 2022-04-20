@@ -4,9 +4,6 @@
 """
 
 
-from numpy import polymul
-
-
 def poly_derivative(poly: list):
     """
         Calculates the derivative of a polynomial.
@@ -26,11 +23,12 @@ def poly_derivative(poly: list):
 
     result = []
 
-    for index in range(1, len(poly)):
+    for index in range(len(poly)):
 
         if not isinstance(index, (int, float)):
             return None
 
-        result.append(index * poly[index])
+        if index != 0:
+            result.append(index * poly[index])
 
     return result
