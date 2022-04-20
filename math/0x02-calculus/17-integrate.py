@@ -15,10 +15,11 @@ def poly_integral(poly, C=0):
         Returns:
             list: The integral of a polynomial.
     """
-    if type(poly) is not list or not isinstance(C, (int, float)):
-        return None
-
-    if len(poly) == 0:
+    if (
+        type(poly) is not list or
+        not isinstance(C, (int, float))
+        or len(poly) == 0
+    ):
         return None
 
     if poly == [0]:
@@ -32,9 +33,6 @@ def poly_integral(poly, C=0):
             return None
 
         formula = coeff / (i + 1)
-        if formula.is_integer():
-            formula = int(formula)
-
-        integrate.append(formula)
+        integrate.append(int(formula) if formula.is_integer() else formula)
 
     return integrate
