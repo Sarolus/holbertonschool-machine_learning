@@ -4,7 +4,7 @@
 """
 
 
-def poly_integral(poly: list, C: int = 0):
+def poly_integral(poly, C=0):
     """
         Calculates the integral of a polynomial.
 
@@ -15,8 +15,14 @@ def poly_integral(poly: list, C: int = 0):
         Returns:
             list: The integral of a polynomial.
     """
-    if not isinstance(poly, list) or len(poly) == 0:
+    if type(poly) is not list or not isinstance(C, (int, float)):
         return None
+
+    if len(poly) == 0:
+        return None
+
+    if poly == [0]:
+        return [C]
 
     integrate = [C]
 
@@ -26,9 +32,9 @@ def poly_integral(poly: list, C: int = 0):
             return None
 
         formula = coeff / (i + 1)
-        if formula % 1 == 0:
-            integrate.append(int(formula))
-        else:
-            integrate.append(formula)
+        if formula.is_integer():
+            formula = int(formula)
+
+        integrate.append(formula)
 
     return integrate
