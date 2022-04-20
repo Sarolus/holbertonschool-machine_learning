@@ -28,7 +28,7 @@ def poly_derivative(poly: list):
 
     for index in range(len(poly)):
 
-        if type(poly[index]) is int:
+        if not isinstance(index, (int, float)):
             return None
 
         if index != 0:
