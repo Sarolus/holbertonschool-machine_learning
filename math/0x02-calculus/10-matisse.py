@@ -18,7 +18,7 @@ def poly_derivative(poly: list):
             list: A New list of coefficients representing the derivative,
             else it returns [0].
     """
-    if  not isinstance(poly, list) or len(poly) == 0:
+    if not isinstance(poly, list) or len(poly) == 0:
         return None
 
     if len(poly) == 1:
@@ -26,12 +26,11 @@ def poly_derivative(poly: list):
 
     result = []
 
-    for index in range(len(poly)):
+    for index in range(1, len(poly)):
 
         if not isinstance(index, (int, float)):
             return None
 
-        if index != 0:
-            result.append(index * poly[index])
+        result.append(index * poly[index])
 
     return result
