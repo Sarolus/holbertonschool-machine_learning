@@ -14,6 +14,9 @@ def summation_i_squared(n: int):
         Returns:
             int: The integer value of the sum.
     """
+    if n <= 0:
+        return None
+
     if n == 1:
         return 1
 
