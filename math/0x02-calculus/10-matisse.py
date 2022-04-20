@@ -18,7 +18,7 @@ def poly_derivative(poly: list):
             list: A New list of coefficients representing the derivative,
             else it returns [0].
     """
-    if len(poly) == 0:
+    if  not isinstance(poly, list) or len(poly) == 0:
         return None
 
     if len(poly) == 1:
