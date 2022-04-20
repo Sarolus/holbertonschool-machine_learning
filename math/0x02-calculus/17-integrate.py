@@ -21,6 +21,10 @@ def poly_integral(poly: list, C: int = 0):
     integrate = [C]
 
     for i, coeff in enumerate(poly):
+
+        if not isinstance(coeff, (int, float)):
+            return None
+
         formula = coeff / (i + 1)
         if formula % 1 == 0:
             integrate.append(int(formula))
