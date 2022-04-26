@@ -65,7 +65,7 @@ class Poisson:
 
         euler = 2.7182818285
 
-        return (self.lambtha ** k * euler ** (self.lambtha)) /\
+        return (self.lambtha ** k * euler ** (-self.lambtha)) /\
             self.factorial(k)
 
     def cdf(self, k):
