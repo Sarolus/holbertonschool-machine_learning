@@ -32,23 +32,20 @@ class Poisson:
                 ValueError: _description_
                 ValueError: _description_
         """
-        try:
-            if self.data is not None:
-                self.lambtha = float(sum(self.data) / len(self.data))
+        if data is not None:
+            if type(data) is not list:
+                raise TypeError("data must be a list")
 
-                if type(self.data) is not list:
-                    raise TypeError("data must be a list")
+            if len(data) < 2:
+                raise ValueError("data must contain multiple values")
 
-                if len(self.data) < 2:
-                    raise ValueError("data must contain multiple values")
+            self.lambtha = float(sum(data) / len(data))
 
-            if self.data is None:
-                self.lambtha = float(lambtha)
+        if data is None:
+            if lambtha <= 0:
+                raise ValueError("lambtha must be a positive value")
 
-                if lambtha <= 0:
-                    raise ValueError("lambtha must be a positive value")
-        except Exception as exception:
-            print(exception)
+            self.lambtha = float(lambtha)
 
     def pmf(self, k):
         """
