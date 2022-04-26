@@ -80,5 +80,24 @@ class Normal:
         e = 2.7182818285
         pi = 3.1415926536
 
-        return e ** pow(self.z_score(x) ** 2, -0.5) /\
-            pow(self.stddev * (2 * pi), 0.5)
+        return e ** (-0.5 * self.z_score(x) ** 2) /\
+            (self.stddev * (2 * pi) ** 0.5)
+
+    def cdf(self, x):
+        """
+            Cumulative distribution function.
+        """
+
+        return 0.5 * (1 + self._erf((x - self.mean) /
+                                    (self.stddev * pow(2, 0.5))))
+
+    def _erf(self, x):
+        """
+            Error function approximation
+        """
+
+        pi = 3.1415926536
+
+        return 2 / pow(pi, 0.5) *\
+            (x - pow(x, 3)/3 + pow(x, 5)/10 -
+                pow(x, 7)/42 + pow(x, 9)/216)
