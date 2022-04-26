@@ -5,6 +5,17 @@
 
 
 class Poisson:
+    """
+        Summary
+
+        Raises:
+            TypeError: _description_
+            ValueError: _description_
+            ValueError: _description_
+
+        Returns:
+            _type_: _description_
+    """
 
     lambtha = None
 
