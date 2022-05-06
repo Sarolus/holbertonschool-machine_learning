@@ -2,3 +2,4 @@
 .editorconfig
 *pycache*
 pca.npz
+documentations/
