@@ -3,3 +3,5 @@
 *pycache*
 pca.npz
 documentations/
+*.pkl
+*.npz
