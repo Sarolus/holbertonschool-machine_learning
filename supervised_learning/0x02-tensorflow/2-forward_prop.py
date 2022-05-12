@@ -2,7 +2,6 @@
 """
     Tensorflow Forward Propagation Module
 """
-import tensorflow.compat.v1 as tf
 create_layer = __import__('1-create_layer').create_layer
 
 
