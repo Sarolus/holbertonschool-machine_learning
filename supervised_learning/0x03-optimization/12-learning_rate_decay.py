@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-    Creates the operation to perform the learning rate decay
+    Tensorflow Learning Rate Decay Module
 """
 
 import tensorflow.compat.v1 as tf

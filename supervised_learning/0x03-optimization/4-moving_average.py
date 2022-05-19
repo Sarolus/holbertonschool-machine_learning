@@ -31,10 +31,10 @@ def moving_average(data, beta):
         # current window in moving average list
         moving_average.append(v)
 
-    exponential_movigin_average = [
+    exponential_moving_average = [
         moving_average[index] /
         (1 - beta ** (index + 1))
         for index in range(len(data))
     ]
 
-    return exponential_movigin_average
+    return exponential_moving_average

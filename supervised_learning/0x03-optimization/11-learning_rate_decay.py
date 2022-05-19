@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-    Creates the operation to perform the learning rate decay
+    Learning Rate Decay Module
 """
 
 import numpy as np
