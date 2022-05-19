@@ -80,7 +80,7 @@ def train_mini_batch(
                         [accuracy, loss], feed_dict={x: x_batch, y: y_batch}
                     )
 
-                    print("\tStep {}:".format(step))
+                    print("\tStep {}:".format(step + 1))
                     print("\t\tCost: {}".format(step_cost))
                     print("\t\tAccuracy: {}".format(step_accuracy))
 
