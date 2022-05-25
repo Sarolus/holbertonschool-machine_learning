@@ -19,7 +19,8 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
         Returns:
             int: The cost of the network accounting for L2 regularization
     """
+    sum = 0
     for index in range(1, L + 1):
-        sum = np.sum(np.square(weights["W" + str(index)]))
+        sum += np.sum(np.square(weights["W" + str(index)]))
 
     return cost + lambtha * sum / (2 * m)
