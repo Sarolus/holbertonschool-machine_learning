@@ -34,7 +34,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         else:
             dz = np.multiply(
                 np.dot(weights_copy["W" + str(layer_index + 1)].T, dz),
-                (1 - (A * A)),
+                (1 - np.power(A, 2)),
             )
 
         dw = 1 / m * np.dot(dz, cache["A" + str(layer_index - 1)].T) + \
