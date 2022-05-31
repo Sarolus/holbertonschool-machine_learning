@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+    Script that tests a neural network.
+"""
 import tensorflow.keras as keras
 
 
