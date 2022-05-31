@@ -3,6 +3,7 @@
     Trains a model using mini-batch gradient descent
     to also analyse validation data
 """
+import tensorflow.keras as keras
 
 
 def train_model(network,

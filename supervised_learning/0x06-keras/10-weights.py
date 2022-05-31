@@ -2,6 +2,7 @@
 """
     Script to save and load weights a keras model
 """
+import tensorflow.keras as keras
 
 
 def save_weights(network, filename, save_format='h5'):
