@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-    Convolutional Backward Propagation Module
+    Performs back propagation over a convolutional layer
+    of a neural network
 """
+
 import numpy as np
 
 
@@ -33,85 +35,49 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
             db: numpy.ndarray containing the gradient of the cost
                 with respect to b
     """
-
     output_nb, output_height, output_width, output_channels = dZ.shape
     _, image_height, image_width, _ = A_prev.shape
     filter_height, filter_width, _, _ = W.shape
     stride_height, stride_width = stride
 
-    # Padding calculate
-    # Calculate the padding height and width
     if padding == 'same':
         padding_height = int(
-            (
-                (
-                    (image_height - 1) * stride_height +
-                    filter_height - image_height
-                ) / 2
-            ) + 1
+            np.ceil(((image_height - 1) * stride_height +
+                    filter_height - image_height) / 2)
         )
         padding_width = int(
-            (
-                (
-                    (image_width - 1) * stride_width +
-                    filter_width - image_width
-                ) / 2
-            ) + 1
+            np.ceil(((image_width - 1) * stride_width +
+                    filter_width - image_width) / 2)
         )
     elif padding == 'valid':
         padding_height = 0
         padding_width = 0
-    else:
-        raise NameError('padding must be same, valid, or a tuple')
 
-    # Initialize dA_prev
+    A_prev = np.pad(A_prev, ((0, 0), (padding_height, padding_height),
+                             (padding_width, padding_width), (0, 0)),
+                    'constant')
+
     input_derivative = np.zeros(A_prev.shape)
-
-    # Initialize dW
     filter_derivative = np.zeros(W.shape)
-
-    # Calculate db
     bias_derivative = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
-    # Loop over outputs
     for output_index in range(output_nb):
-        # Loop over vertical axis
         for row in range(output_height):
-            # Loop over horizontal axis
             for column in range(output_width):
-                x = column * stride_width
-                y = row * stride_height
-                slice = A_prev[
-                    output_index,
-                    x:x + filter_height,
-                    y:y + filter_width,
-                    :
-                ]
-
-                # Loop over channels
                 for channel in range(output_channels):
+                    x = row * stride_height
+                    y = column * stride_width
                     filter = W[:, :, :, channel]
                     output_derivative = dZ[output_index, row, column, channel]
-
-                    # Apply the slice to the filter
+                    slice_a = A_prev[output_index, x:x +
+                                     filter_height, y:y+filter_width, :]
                     filter_derivative[:, :, :,
-                                      channel] += slice * output_derivative
-
-                    # Apply the filter to the input
-                    input_derivative[
-                        output_index,
-                        x:x + filter_height,
-                        y:y + filter_width,
-                        :
-                    ] += output_derivative * filter
-
-        # If padding is same apply it
-        if padding == 'same':
-            dA_prev = dA_prev[
-                :,
-                padding_height:-padding_height,
-                padding_width:-padding_width,
-                :
-            ]
-
+                                      channel] += slice_a * output_derivative
+                    input_derivative[output_index, x:x+filter_height,
+                                     y:y+filter_width,
+                                     :] += output_derivative * filter
+    if padding == 'same':
+        input_derivative = input_derivative[:,
+                                            padding_height:-padding_height,
+                                            padding_width:-padding_width, :]
     return input_derivative, filter_derivative, bias_derivative
