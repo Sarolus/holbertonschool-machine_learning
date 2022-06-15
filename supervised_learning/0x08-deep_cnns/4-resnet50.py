@@ -34,7 +34,7 @@ def resnet50():
         padding="same"
     )(activation)
 
-    Y = projection_block(Y, [64, 64, 256])
+    Y = projection_block(Y, [64, 64, 256], 1)
 
     for _ in range(2):
         Y = identity_block(Y, [64, 64, 256])
