@@ -4,6 +4,9 @@
 """
 
 
+determinant = __import__('0-determinant').determinant
+
+
 def get_matrix_minor(matrix, row, column):
     """
         Get the minor sub matrix.
@@ -44,44 +47,6 @@ def create_sub_matrix(matrix_length, matrix, row_index):
     ]
 
     return sub_matrix
-
-
-def determinant(matrix):
-    """
-        Calculates the determinant of the given matrix.
-
-        Args:
-            matrix (list): The given matrix.
-
-        Returns:
-            int: The determinant of the given matrix.
-    """
-    matrix_length = len(matrix)
-    result = 0
-
-    if not matrix or not isinstance(matrix, list):
-        raise TypeError("matrix must be a list of lists")
-
-    if matrix == [[]]:
-        return 1
-
-    for row in matrix:
-        if type(row) is not list:
-            raise TypeError('matrix must be a list of lists')
-
-        if len(row) != matrix_length:
-            raise ValueError('matrix must be a square matrix')
-
-    if matrix_length == 1:
-        return matrix[0][0]
-
-    for row_index in range(matrix_length):
-        value = matrix[0][row_index]
-        sub_matrix = create_sub_matrix(matrix_length, matrix, row_index)
-        sub_determinant = determinant(sub_matrix)
-        result += ((-1) ** row_index) * value * sub_determinant
-
-    return result
 
 
 def minor(matrix):
