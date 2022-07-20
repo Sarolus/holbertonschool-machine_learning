@@ -41,16 +41,18 @@ def determinant(matrix):
     matrix_length = len(matrix)
     result = 0
 
-    if not isinstance(matrix, list) or matrix_length == 0:
+    if not matrix or not isinstance(matrix, list):
         raise TypeError("matrix must be a list of lists")
-
-    if len(matrix[0]) != 0 and not all(
-        isinstance(row, list) and matrix_length == len(row) for row in matrix
-    ):
-        raise ValueError("matrix must be a square matrix")
 
     if matrix == [[]]:
         return 1
+
+    for row in matrix:
+        if type(row) is not list:
+            raise TypeError('matrix must be a list of lists')
+
+        if len(row) != matrix_length:
+            raise ValueError('matrix must be a square matrix')
 
     if matrix_length == 1:
         return matrix[0][0]
