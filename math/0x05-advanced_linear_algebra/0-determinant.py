@@ -28,7 +28,10 @@ def create_sub_matrix(matrix_length, matrix, row_index):
     return sub_matrix
 
 
-def determinant(matrix):
+def determinant(matrix,
+                type_error_msg='matrix must be a list of lists',
+                value_error_msg='matrix must be a square matrix'
+                ):
     """
         Calculates the determinant of the given matrix.
 
@@ -49,10 +52,10 @@ def determinant(matrix):
 
     for row in matrix:
         if type(row) is not list:
-            raise TypeError('matrix must be a list of lists')
+            raise TypeError(type_error_msg)
 
         if len(row) != matrix_length:
-            raise ValueError('matrix must be a square matrix')
+            raise ValueError(value_error_msg)
 
     if matrix_length == 1:
         return matrix[0][0]
