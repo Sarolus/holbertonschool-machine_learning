@@ -45,7 +45,7 @@ def determinant(matrix):
         raise TypeError("matrix must be a list of lists")
 
     if len(matrix[0]) != 0 and not all(
-        matrix_length == len(row) for row in matrix
+        isinstance(row, list) and matrix_length == len(row) for row in matrix
     ):
         raise ValueError("matrix must be a square matrix")
 
