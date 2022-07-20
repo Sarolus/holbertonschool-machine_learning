@@ -16,7 +16,10 @@ def inverse(matrix):
         Returns:
             list: The inverse matrix.
     """
-    det = determinant(matrix)
+    det = determinant(
+        matrix,
+        value_error_msg='matrix must be a non-empty square matrix'
+    )
     adj = adjugate(matrix)
 
     matrix_length = len(adj)
