@@ -5,3 +5,5 @@ pca.npz
 documentations/
 *.pkl
 *.npz
+optional_projects/
+*.h5
