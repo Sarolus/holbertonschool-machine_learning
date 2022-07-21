@@ -52,7 +52,13 @@ def definiteness(matrix):
         row, column = matrix.shape
 
         if row != column:
-            return None
+            raise TypeError
+
+        matrix_transpose = matrix.copy().T
+
+        if not np.array_equal(matrix, matrix_transpose):
+            raise TypeError
+
     except Exception as exception:
         return None
 
