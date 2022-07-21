@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-    Matrix Cofactorofactor Calculation Module
+    Matrix Cofactor Calculation Module
 """
 
 minor = __import__('1-minor').minor
