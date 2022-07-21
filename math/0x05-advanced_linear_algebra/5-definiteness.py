@@ -34,6 +34,21 @@ def is_neg_semi_def(matrix):
     return np.all(np.linalg.eigvals(matrix) <= 0)
 
 
+def check_symmetric_matrix(matrix: np.ndarray):
+    """
+        Check if the matrix is symmetric.
+    """
+    row, column = matrix.shape
+
+    if row != column:
+        raise TypeError
+
+    matrix_transpose = matrix.copy().T
+
+    if not np.array_equal(matrix, matrix_transpose):
+        raise TypeError
+
+
 def definiteness(matrix):
     """
         Determines the definiteness of the given matrix.
@@ -49,15 +64,7 @@ def definiteness(matrix):
         raise TypeError("matrix must be a numpy.ndarray")
 
     try:
-        row, column = matrix.shape
-
-        if row != column:
-            raise TypeError
-
-        matrix_transpose = matrix.copy().T
-
-        if not np.array_equal(matrix, matrix_transpose):
-            raise TypeError
+        check_symmetric_matrix(matrix)
 
     except Exception as exception:
         return None
