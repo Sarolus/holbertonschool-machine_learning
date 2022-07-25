@@ -21,11 +21,10 @@ def correlation(C):
     if type(C) is not np.ndarray:
         raise TypeError("C must be a numpy.ndarray")
 
-    d1, d2 = np.shape(C)
-
-    if len(C.shape) != 2 or d1 != d2:
+    if len(C.shape) != 2 or C.shape[0] != C.shape[1]:
         raise ValueError("C must be a 2D square matrix")
 
+    d1, _ = np.shape(C)
     correlation_matrix = np.zeros((d1, d1))
 
     for row in range(d1):
