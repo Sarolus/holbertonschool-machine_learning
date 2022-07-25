@@ -39,12 +39,12 @@ class MultiNormal:
         """
 
         if type(X) is not np.ndarray or len(X.shape) != 2:
-            raise TypeError("X must be a 2D numpy.ndarray")
+            raise TypeError("data must be a 2D numpy.ndarray")
 
         data_points, dimensions = np.shape(X)
 
         if data_points < 2:
-            raise ValueError("X must contain multiple data points")
+            raise ValueError("data must contain multiple data points")
 
         mean = np.mean(X, axis=1).reshape(data_points, 1)
         X -= mean
