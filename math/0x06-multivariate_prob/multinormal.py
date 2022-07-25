@@ -4,8 +4,6 @@
 """
 import numpy as np
 
-mean_cov = __import__('0-mean_cov').mean_cov
-
 
 class MultiNormal:
     """
