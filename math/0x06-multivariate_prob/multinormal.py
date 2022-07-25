@@ -41,7 +41,7 @@ class MultiNormal:
 
         data_points, dimensions = np.shape(X)
 
-        if data_points < 2:
+        if dimensions < 2:
             raise ValueError("data must contain multiple data points")
 
         mean = np.mean(X, axis=1).reshape(data_points, 1)
