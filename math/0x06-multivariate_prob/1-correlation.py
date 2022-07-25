@@ -26,7 +26,7 @@ def correlation(C):
     if len(C.shape) != 2 or d1 != d2:
         raise ValueError("C must be a 2D square matrix")
 
-    correlation_matrix = np.zeros((d1, d2))
+    correlation_matrix = np.zeros((d1, d1))
 
     for row in range(d1):
         for column in range(d1):
