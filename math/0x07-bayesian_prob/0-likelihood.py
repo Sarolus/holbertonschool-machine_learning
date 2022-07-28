@@ -24,7 +24,7 @@ def likelihood(x, n, P):
 
     if not isinstance(x, int) or x < 0:
         raise ValueError(
-            "n must be an integer that is greater than or equal to 0"
+            "x must be an integer that is greater than or equal to 0"
         )
 
     if x > n:
@@ -33,9 +33,8 @@ def likelihood(x, n, P):
     if not isinstance(P, np.ndarray) or len(P.shape) != 1:
         raise TypeError("P must be a 1D numpy.ndarray")
 
-    for p in P:
-        if p < 0 or p > 1:
-            raise ValueError("All values in P must be in the range [0, 1]")
+    if any(i < 0 or i > 1 for i in P):
+        raise ValueError("All values in P must be in the range [0, 1]")
 
     factorial_p = np.math.factorial(
         n) / (np.math.factorial(x) * np.math.factorial(n - x))
