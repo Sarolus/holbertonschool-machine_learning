@@ -17,13 +17,25 @@ def initialize(X, k):
             centroids: numpy.ndarray of shape (k, d) containing the centroids
     """
 
-    _, dimensions = X.shape
-    min_value = np.ndarray.min(X, axis=0)
-    max_value = np.ndarray.max(X, axis=0)
-    # Draw samples from a uniform distribution.
-    # Samples are uniformly distributed over the half-open interval [low, high)
-    # (includes low, but excludes high)
-    centroids = np.random.uniform(
-        low=min_value, high=max_value, size=(k, dimensions))
+    try:
 
-    return centroids
+        if not isinstance(k, int):
+            raise TypeError
+
+        if k <= 0:
+            raise ValueError
+
+        _, dimensions = X.shape
+        min_value = np.ndarray.min(X, axis=0)
+        max_value = np.ndarray.max(X, axis=0)
+        # Draw samples from a uniform distribution.
+        # Samples are uniformly distributed over the
+        # half-open interval [low, high)
+        # (includes low, but excludes high)
+        centroids = np.random.uniform(
+            low=min_value, high=max_value, size=(k, dimensions))
+
+        return centroids
+
+    except Exception as exception:
+        return None
