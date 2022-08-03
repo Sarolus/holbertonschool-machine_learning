@@ -1,83 +1,54 @@
 #!/usr/bin/env python3
 """
-    Script that performs K-means on the dataset
+    Script that perform K-means on a dataset.
 """
 
 import numpy as np
 
 
-def initialize(X, k):
+def get_distances(centroids, X):
     """
-        Initializes cluster centroids for K-means
+        Get the distances between the centroids and the data.
 
         Args:
-            X: numpy.ndarray of shape (n, d) containing the dataset
-            k: int representing the number of clusters
-        Returns:
             centroids: numpy.ndarray of shape (k, d) containing the centroids
-    """
-
-    try:
-        if not isinstance(k, int):
-            raise TypeError("k must be an integer")
-
-        if k <= 0:
-            return ValueError("k must be greater than 0")
-
-        _, dimensions = X.shape
-        min_value = np.ndarray.min(X, axis=0)
-        max_value = np.ndarray.max(X, axis=0)
-
-        # Draw samples from a uniform distribution.
-        # Samples are uniformly distributed over the half-open interval
-        # [low, high) (includes low, but excludes high)
-        centroids = np.random.uniform(
-            low=min_value, high=max_value, size=(k, dimensions)
-        )
-
-        return centroids
-    except Exception as e:
-        return None
-
-
-def get_distances(X, centroids):
-    """
-        Calculates the distance between each point in X and the centroids
-
-        Args:
             X: numpy.ndarray of shape (n, d) containing the dataset
-            centroids: numpy.ndarray of shape (k, d) containing the centroids
 
         Returns:
-            distances: numpy.ndarray of shape (n, k) containing the distance
+            distances: numpy.ndarray of shape (n, k) containing the distances
     """
 
     extended_centroids = centroids[:, np.newaxis]
-    distances = np.sqrt(
-        np.sum(np.square(X - extended_centroids), axis=2))
 
-    return distances
+    return np.sqrt(np.sum(np.square(extended_centroids - X), axis=2))
 
 
-def update_centroids(X, labels, centroids, distance_index):
+def update_centroids(
+    X, labels, distance_index, centroids, low, high, dimensions
+):
     """
-        Updates the centroids of the clusters
+        Update the centroids.
 
         Args:
             X: numpy.ndarray of shape (n, d) containing the dataset
-            labels: numpy.ndarray of shape (n,) containing the index
-                    of the cluster in centroids
+            labels: numpy.ndarray of shape (n,) containing the labels of the
+                clusters
+            distance_index: int representing the index of the cluster
             centroids: numpy.ndarray of shape (k, d) containing the centroids
-                       of the clusters
-            distance_index: int representing the index of the cluster in
-            centroids
+            low: numpy.ndarray of shape (d,) containing the lower bounds of
+                 the dataset
+            high: numpy.ndarray of shape (d,) containing the upper bounds of
+                  the dataset
+            dimensions: int representing the number of dimensions of the
+                dataset
 
         Returns:
             centroids: numpy.ndarray of shape (k, d) containing the centroids
     """
 
-    if X[labels == distance_index].size == 0:
-        centroids[distance_index] = initialize(X, 1)
+    if (labels == distance_index).sum() == 0:
+        centroids[distance_index] = np.random.uniform(
+            low=low, high=high, size=(1, dimensions))
     else:
         centroids[distance_index] = np.mean(
             X[labels == distance_index], axis=0)
@@ -87,46 +58,61 @@ def update_centroids(X, labels, centroids, distance_index):
 
 def kmeans(X, k, iterations=1000):
     """
-        Performs K-means on a dataset
-
-        Args:
-            X: numpy.ndarray of shape (n, d) containing the dataset
-            k: int representing the number of clusters
-            iterations: int representing the number of iterations to perform
-
-        Returns:
-            centroids: numpy.ndarray of shape (k, d) containing the centroids
-                       of the clusters
-            labels: numpy.ndarray of shape (n,) containing the index
-                    of the cluster in C
+    Method to perform K-means on a dataset.
+    Parameters:
+        X (numpy.ndarray of shape(n, d)): The dataset.
+            n (int): number of data points.
+            d (int): number of dimensions for each data point.
+        K (positive int): The number of clusters.
+        iterations (positive int): the maximum number of iterations
+          that should be performed
+    Returns:
+        C, clss or None, None on failure
+        C (numpy.ndarray of shape(k, d)):
+        containing the centroid means for each cluster.
+        clss (numpy.ndarray of shape (n,)):
+        containing the index of the cluster in C
+        that each data point belongs to
     """
     try:
+        if not isinstance(X, np.ndarray):
+            raise TypeError("X must be a numpy.ndarray")
+
+        if X.ndim != 2:
+            raise TypeError("X must be a 2D array")
+
+        if not isinstance(k, int):
+            raise TypeError("k must be an integer")
+
+        if k <= 0:
+            raise ValueError("k must be greater than 0")
+
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
 
         if iterations <= 0:
             raise ValueError("iterations must be greater than 0")
 
-        centroids = initialize(X, k)
+        n, dimensions = X.shape
+        low = np.amin(X, axis=0)
+        high = np.amax(X, axis=0)
+        centroids = np.random.uniform(low=low, high=high, size=(k, dimensions))
 
-        if (centroids is None):
-            raise ValueError("C is not initialized")
-
-        old_centroids = centroids.copy()
-
-        for _ in range(iterations):
-            distances = get_distances(X, centroids)
+        for i in range(iterations):
+            old_centroids = centroids.copy()
+            labels = np.zeros(n)
+            distances = get_distances(centroids, X)
             labels = np.argmin(distances, axis=0)
 
             for distance_index in range(k):
                 centroids = update_centroids(
-                    X, labels, centroids, distance_index)
+                    X, labels, distance_index, centroids, low, high, dimensions
+                )
 
-            # If no change in the cluster centroids occurs between iterations,
-            # your function should return
-            if np.all(centroids == old_centroids):
-                raise ValueError("Centroids not changed")
-
+            distances = get_distances(centroids, X)
+            labels = np.argmin(distances, axis=0)
+            if np.array_equal(centroids, old_centroids):
+                break
         return centroids, labels
-    except Exception as e:
+    except Exception:
         return None, None
