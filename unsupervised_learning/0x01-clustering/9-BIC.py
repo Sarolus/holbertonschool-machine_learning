@@ -38,7 +38,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
         if not isinstance(kmin, int):
             raise TypeError("kmin must be an integer")
 
-        if kmin <= 0:
+        if kmin < 1:
             raise ValueError("kmin must be greater than 0")
 
         data_points, dimensions = X.shape
@@ -49,7 +49,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
         if not isinstance(kmax, int):
             raise TypeError("kmax must be an integer")
 
-        if kmax <= 1:
+        if kmax < 1:
             raise ValueError("kmax must be greater than 0")
 
         if kmax < kmin + 1:
@@ -84,8 +84,10 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
             log_likelihoods.append(log_likelihood)
 
             parameter_count = (
-                cluster * (dimensions + 2) * (dimensions + 1) / 2
-                - 1
+                (dimensions * cluster) +
+                (cluster * dimensions *
+                 (dimensions + 1) / 2) +
+                cluster - 1
             )
 
             BICs.append(
