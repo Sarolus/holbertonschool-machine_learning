@@ -49,16 +49,16 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
         if not isinstance(kmax, int):
             raise TypeError("kmax must be an integer")
 
-        if kmax <= 0:
+        if kmax <= 1:
             raise ValueError("kmax must be greater than 0")
 
-        if kmax < kmin:
+        if kmax < kmin + 1:
             raise ValueError("kmax must be greater than kmin")
 
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
 
-        if iterations <= 0:
+        if iterations < 1:
             raise ValueError("iterations must be greater than 0")
 
         if not isinstance(tol, float):
