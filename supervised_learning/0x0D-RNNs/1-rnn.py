@@ -29,11 +29,14 @@ def rnn(rnn_cell, X, h_0):
 
     t, m, i = X.shape
     h = h_0.shape[1]
-    H = np.zeros((t, m, h))
-    Y = np.zeros((t, m, rnn_cell.o))
+    H = np.zeros((t + 1, m, h))
     H[0] = h_0
 
     for i in range(t):
-        H[i], Y[i] = rnn_cell.forward(H[i - 1], X[i])
+        H[i + 1], y = rnn_cell.forward(H[i], X[i])
+
+        Y = np.concatenate((Y, y)) if i != 0 else y
+
+    Y = Y.reshape(t, m, Y.shape[-1])
 
     return H, Y
