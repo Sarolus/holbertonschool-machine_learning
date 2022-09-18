@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
     Script that calculates the cumulative ngram BLEU score for a sentence
