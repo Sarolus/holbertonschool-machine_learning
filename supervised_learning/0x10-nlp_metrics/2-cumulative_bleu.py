@@ -1,6 +1,7 @@
+
 #!/usr/bin/env python3
 """
-    Cumulative N-gram BLEU Score
+    Script that calculates the cumulative ngram BLEU score for a sentence
 """
 
 import numpy as np
@@ -9,14 +10,12 @@ import numpy as np
 def cumulative_bleu(references, sentence, n):
     """
         Calculates the cumulative ngram BLEU score for a sentence
-
         Args:
             references: list of reference translations
-                        each reference translation is a list of the
-                        words in the translation
+                        each reference translation is a list
+                        of the  words in the translation
             sentence: list containing the model proposed sentence
             n: the size of the largest n-gram to use for evaluation
-
         Returns:
             the cumulative ngram BLEU score
     """
@@ -24,20 +23,21 @@ def cumulative_bleu(references, sentence, n):
     def brevity_penalty(references, sentence):
         """
             Calculates the brevity penalty for a sentence
-
             Args:
                 references: list of reference translations
-                            each reference translation is a list of the
-                            words in the translation
+                            each reference translation is a list of
+                            the words in the translation
                 sentence: list containing the model proposed sentence
-
             Returns:
                 the brevity penalty
         """
 
         # Calculate the closest reference length
-        closest_ref_len = min([len(ref) for ref in references],
-                              key=lambda x: abs(len(sentence) - x))
+        closest_ref_len = min(
+            [
+                len(ref) for ref in references
+            ], key=lambda x: abs(len(sentence) - x)
+        )
 
         # Calculate the brevity penalty
         if len(sentence) > closest_ref_len:
@@ -45,17 +45,14 @@ def cumulative_bleu(references, sentence, n):
         else:
             return np.exp(1 - closest_ref_len / len(sentence))
 
-    def clipped_count(references, sentence, n):
+    def clipped_count(references, sentence):
         """
             Calculates the clipped count for a sentence
-
             Args:
                 references: list of reference translations
-                            each reference translation is a list of the
-                            words in the translation
+                            each reference translation is a list of
+                            the words in the translation
                 sentence: list containing the model proposed sentence
-                n: the size of the n-gram to use for evaluation
-
             Returns:
                 the clipped count
         """
@@ -78,20 +75,54 @@ def cumulative_bleu(references, sentence, n):
 
         return sum(word_count.values())
 
-    brevity_penalty = brevity_penalty(references, sentence)
+    def n_gram_generator(sentence, n=2):
+        """
+            Generates the n-gram for a sentence
+            Args:
+                sentence: list containing the model proposed sentence
+                n: the size of the n-gram to use for evaluation
+            Returns:
+                the n-gram for the sentence
+        """
+        n_grams = []
 
-    # Calculate the clipped counts
-    clipped_counts = [clipped_count(references, sentence, i)
-                      for i in range(1, n + 1)]
+        for i in range(len(sentence) - n + 1):
+            n_grams.append(tuple(sentence[i:i + n]))
 
-    # Calculate the ngram BLEU scores
-    ngram_bleu_scores = [np.exp(
-        np.log(clipped_count) - np.log(len(sentence) - i + 1))
-        for i, clipped_count in enumerate(clipped_counts, 1)]
+        return n_grams
 
-    # Calculate the cumulative BLEU score
-    cumulative_bleu_score = brevity_penalty * \
-        np.exp(np.sum([np.log(ngram_bleu_score)
-               for ngram_bleu_score in ngram_bleu_scores]) / n)
+    def cumul_precision(references, sentence, n):
+        """
+            Calculates the cumulative precision for a sentence
+            Args:
+                references: list of reference translations
+                            each reference translation is a list of
+                            the words in the translation
+                sentence: list containing the model proposed sentence
+                n: the size of the n-gram to use for evaluation
+            Returns:
+                the cumulative precision
+        """
 
-    return cumulative_bleu_score
+        cumul_bleu = []
+        for i in range(1, n + 1):
+            n_grams = n_gram_generator(sentence, i)
+            n_gram_ref = [
+                n_gram_generator(reference, i) for reference in references
+            ]
+            cc = clipped_count(n_gram_ref, n_grams)
+            precision = cc / len(n_grams)
+            cumul_bleu.append(precision)
+
+        return cumul_bleu
+
+    bp = brevity_penalty(references, sentence)
+    cp = np.exp(
+        np.sum(
+            1/n * np.log(
+                np.array(cumul_precision(references, sentence, n))
+            )
+        )
+    )
+
+    return bp * cp
