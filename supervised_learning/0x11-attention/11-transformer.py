@@ -9,7 +9,7 @@ Encoder = __import__('9-transformer_encoder').Encoder
 Decoder = __import__('10-transformer_decoder').Decoder
 
 
-class Transformer(tf.keras.layers.Layer):
+class Transformer(tf.keras.Model):
     """
         Creates a transformer network
 
@@ -20,8 +20,8 @@ class Transformer(tf.keras.layers.Layer):
     """
 
     def __init__(
-        self, N, dm, h, hidden, input_vocab,
-        target_vocab, max_seq_len, drop_rate=0.1
+        self, N, dm, h, hidden, input_vocab, target_vocab,
+        max_seq_input, max_seq_target, drop_rate=0.1
     ):
         """
             Constructor
@@ -40,9 +40,9 @@ class Transformer(tf.keras.layers.Layer):
 
         super(Transformer, self).__init__()
 
-        self.encoder = Encoder(N, dm, h, hidden, input_vocab, max_seq_len,
+        self.encoder = Encoder(N, dm, h, hidden, input_vocab, max_seq_input,
                                drop_rate)
-        self.decoder = Decoder(N, dm, h, hidden, target_vocab, max_seq_len,
+        self.decoder = Decoder(N, dm, h, hidden, target_vocab, max_seq_target,
                                drop_rate)
         self.linear = tf.keras.layers.Dense(target_vocab)
 
