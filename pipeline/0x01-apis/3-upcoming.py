@@ -2,21 +2,29 @@
 """
     API Requesting Module
 """
+
 import requests
 
 
 if __name__ == '__main__':
-    r = requests.get("https://api.spacexdata.com/v4/launches/upcoming").json()
-    launch_name = r[0]["name"]
-    date_local = r[0]["date_local"]
-    rocket_id = r[0]["rocket"]
-    launchpad_id = r[0]["launchpad"]
-    rocket_name = requests.get("https://api.spacexdata.com/v4/rockets/{}"
-                               .format(rocket_id)).json()["name"]
-    launchpad = requests.get("https://api.spacexdata.com/v4/launchpads/{}"
-                             .format(launchpad_id)).json()
-    launchpad_name = launchpad["name"]
-    launchpad_loc = launchpad["locality"]
-
-    print(launch_name, date_local, rocket_name, "-", launchpad_name, "({})"
-          .format(launchpad_loc))
+    data = requests.get('https://api.spacexdata.com/v4/launches/upcoming',
+                        headers={'pagination': 'false'})
+    data = data.json()
+    time = 99999999999
+    next = None
+    for launch in data:
+        thistime = int(launch['date_unix'])
+        if thistime < time:
+            time = thistime
+            next = launch
+    if next is not None:
+        rocket = requests.get('https://api.spacexdata.com/v4/rockets/'
+                              + next['rocket'])
+        rocket = rocket.json()['name']
+        lpad = requests.get('https://api.spacexdata.com/v4/launchpads/'
+                            + next['launchpad'])
+        lpad = lpad.json()
+        locale = lpad['locality']
+        lpad = lpad['name']
+        print('{} ({}) {} - {} ({})'.format(next['name'], next['date_local'],
+                                            rocket, lpad, locale))
