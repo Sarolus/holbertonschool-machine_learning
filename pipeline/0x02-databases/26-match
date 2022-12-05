@@ -1,0 +1,1 @@
+db.school.findOne({name: "Holberton school"})
