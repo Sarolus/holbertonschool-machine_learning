@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
+"""
+    Nginx Logs Statistics Module
+"""
 
 from pymongo import MongoClient
 import urllib
 
 if __name__ == "__main__":
-    username = urllib.parse.quote_plus('root')
-    password = urllib.parse.quote_plus('root')
-    client = MongoClient('mongodb://%s:%s@127.0.0.1' % (username, password))
-    database = client.logs
-    collection = database.nginx
-
-    print("{} logs".format(collection.count_documents({})))
+    client = MongoClient('mongodb://127.0.0.1:27017')
+    logs_coll = client.logs.nginx
+    doc_count = logs_coll.count_documents({})
+    print("{} logs".format(doc_count))
     print("Methods:")
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for method in methods:
-        print("\tmethod {}: {}".format(method, collection.count_documents({"method": method})))
-
-    print("{} status check".format(collection.count_documents({"path": "/status"})))
+        method_count = logs_coll.count_documents({"method": method})
+        print("\tmethod {}: {}".format(method, method_count))
+    filter_path = {"method": "GET", "path": "/status"}
+    path_count = logs_coll.count_documents(filter_path)
+    print("{} status check".format(path_count))
