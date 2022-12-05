@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+    Topic Modification Module
+"""
+
 
 def update_topics(mongo_collection, name, topics):
     """

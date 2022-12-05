@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+    New Entry in Collection Insertion Module
+"""
+
 
 def insert_school(mongo_collection, **kwargs):
     """
