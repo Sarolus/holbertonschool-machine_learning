@@ -2,4 +2,4 @@
 
 -- DROP INDEX IF EXISTS names_first_letter_idx;
 
-CREATE INDEX names_first_letter_idx ON names (name(1));
+CREATE INDEX idx_name_first ON names (name(1));
