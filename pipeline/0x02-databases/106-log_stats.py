@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
+"""
+    List 10 most present IPs in the collection Nginx
+"""
 
 from pymongo import MongoClient
 import urllib
 
 if __name__ == "__main__":
-    username = urllib.parse.quote_plus('root')
-    password = urllib.parse.quote_plus('root')
-    client = MongoClient('mongodb://%s:%s@127.0.0.1' % (username, password))
+    client = MongoClient('mongodb://127.0.0.1:27017')
     database = client.logs
     collection = database.nginx
 
