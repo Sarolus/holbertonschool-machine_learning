@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+    Collection Listing Module
+"""
+
 
 def list_all(mongo_collection):
     """
