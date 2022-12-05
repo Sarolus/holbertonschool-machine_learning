@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+    All Students sorted by Average Score Module
+"""
+
 
 def top_students(mongo_collection):
     """
