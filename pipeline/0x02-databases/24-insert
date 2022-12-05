@@ -1,2 +1,2 @@
 // Inserts a document in the collection school in MongoDB
-db.school.insertOne({name: "Holberton school"})
+db.school.insert({name: "Holberton school"})
