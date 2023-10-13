@@ -4,7 +4,7 @@
 
 - Adrien MILLOT <<adrien.millot@gmail.com>>
 
-- Nathan LAPEYRE <<sarolus@gmail.com>>
+- Nathan LAPEYRE <<nathanlapeyre.dev@gmail.com>>
 
 ## Description
 
